@@ -21,14 +21,15 @@
         }
 
         header {
-            background: #2D2D2D;
+            background: rgba(45, 45, 45, 0.95);
+            backdrop-filter: blur(10px);
             color: #FFFFFF;
             padding: 1rem 0;
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 100;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, background 0.3s ease;
         }
 
         header.hidden {
@@ -39,6 +40,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         header h1 {
@@ -84,24 +91,60 @@
 
         .hero {
             text-align: center;
-            padding: 4rem 0;
-            background: #FFFFFF;
-            margin-top: 60px; /* Offset for fixed header */
+            padding: 8rem 0 6rem;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('images/header-image.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin-top: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.1), rgba(68, 160, 141, 0.1));
+            z-index: 1;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 2;
         }
 
         .hero h2 {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             font-weight: 700;
-            margin-bottom: 1rem;
-            color: #2D2D2D;
+            margin-bottom: 1.5rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            animation: fadeInUp 1s ease-out;
         }
 
         .hero p {
-            font-size: 1.2rem;
-            max-width: 600px;
+            font-size: 1.4rem;
+            max-width: 700px;
             margin: 0 auto;
-            color: #2D2D2D;
-            animation: fadeInUp 1s ease-out;
+            color: #FFFFFF;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(78, 205, 196, 0.1), rgba(68, 160, 141, 0.1));
+            transform: translateZ(0);
+            will-change: transform;
         }
 
         section {
@@ -132,12 +175,30 @@
             border: 1px solid #2D2D2D;
             text-align: center;
             transition: transform 0.3s ease, border-color 0.3s ease;
+            overflow: hidden;
+        }
+
+        .application-image {
+            margin: -1.5rem -1.5rem 1rem -1.5rem;
+            overflow: hidden;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .application-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .application:hover .application-image img {
+            transform: scale(1.05);
         }
 
         .application:hover {
             transform: scale(1.03);
-            border-color: #4ECDC4;
-            box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+            border-color: #112034;
+            box-shadow: 0 0 10px rgba(8, 25, 58, 0.3);
         }
 
         .application h3 {
@@ -232,15 +293,16 @@
             }
 
             .hero {
-                margin-top: 100px; /* Adjust for stacked header on mobile */
+                background-attachment: scroll;
+                padding: 6rem 0 4rem;
             }
 
             .hero h2 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
 
             .hero p {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
             }
 
             section h2 {
@@ -260,12 +322,21 @@
                 gap: 1rem;
             }
         }
+
+        /* Parallax effect for mobile devices */
+        @media (max-width: 768px) {
+            .hero {
+                background-attachment: scroll;
+            }
+        }
     </style>
 </head>
 <body>
     <header id="header">
         <div class="container">
-            <h1>American Motors KZ</h1>
+            <div class="logo-container">
+                <h1>American Motors KZ</h1>
+            </div>
         </div>
     </header>
 
@@ -289,26 +360,44 @@
             <h2>Applications</h2>
             <div class="application-grid">
                 <div class="application">
+                    <div class="application-image">
+                        <img src="images/transport.jpg" alt="Transport applications of our motor technology" loading="lazy">
+                    </div>
                     <h3>Transport</h3>
                     <p>Our engine eliminates the need for a gearbox, enabling smoother control and higher power in a smaller size. Ideal for electric scooters, bicycles, trucks, and buses, with energy recuperation during braking.</p>
                 </div>
                 <div class="application">
+                    <div class="application-image">
+                        <img src="images/aviation.jpg" alt="Aviation applications of our motor technology" loading="lazy">
+                    </div>
                     <h3>Aviation</h3>
                     <p>Reducing engine weight and size increases cargo capacity or flight time, critical for drones where weight is paramount.</p>
                 </div>
                 <div class="application">
+                    <div class="application-image">
+                        <img src="images/household.jpg" alt="Household Equipment applications of our motor technology" loading="lazy">
+                    </div>
                     <h3>Household Equipment</h3>
                     <p>Our motors reduce starting current, making appliances like washing machines, refrigerators, and air conditioners quieter and more efficient.</p>
                 </div>
                 <div class="application">
+                    <div class="application-image">
+                        <img src="images/hand-electric-tools.jpg" alt="Hand Electric Tools applications of our motor technology" loading="lazy">
+                    </div>
                     <h3>Hand Electric Tools</h3>
                     <p>Smaller, gearbox-free tools with controller-based speed and power for smoother, precise operation.</p>
                 </div>
                 <div class="application">
+                    <div class="application-image">
+                        <img src="images/high-power-electric-motors.jpg" alt="High Power Electric Motors applications of our motor technology" loading="lazy">
+                    </div>
                     <h3>High Power Electric Motors</h3>
                     <p>Soft-start technology eliminates the need for high starting currents, preventing emergency power disconnections in industrial settings.</p>
                 </div>
                 <div class="application">
+                    <div class="application-image">
+                        <img src="images/green-energy-generators.jpg" alt="Green Energy Generators applications of our motor technology" loading="lazy">
+                    </div>
                     <h3>Green Energy Generators</h3>
                     <p>Our motors act as low-speed generators for wind and water energy, producing high-quality current without gearboxes or neodymium magnets, reducing costs and dependency on rare earth elements.</p>
                 </div>
